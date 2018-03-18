@@ -1,0 +1,37 @@
+{
+    "name": "daften/addressing-bundle",
+    "description": "Provides an integration between commerceguys addressing package and Symfony.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["postal", "address", "internationalization", "localization", "addressing", "commerceguys"],
+    "authors": [
+        {
+            "name": "daften",
+            "email": "dieterblomme@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0.8",
+        "commerceguys/addressing": "^0.8",
+        "commerceguys/intl": "^0.7",
+        "symfony/framework-bundle": "^4.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.10",
+        "symfony/phpunit-bridge": "^4.0"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": { "Symfony\\Bundle\\MakerBundle\\": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
