@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable
  */
-class Address extends \CommerceGuys\Addressing\Model\Address
+class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
 {
     /**
      * @ORM\Column(type="string", length=2)
