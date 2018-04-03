@@ -29,7 +29,7 @@
         "sort-packages": true
     },
     "autoload": {
-        "psr-4": { "Daften\\Addressing\\": "src/" }
+        "psr-4": { "Daften\\Bundle\\AddressingBundle\\": "" }
     },
     "extra": {
         "branch-alias": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Daften\Addressing\Form;
+namespace Daften\Bundle\AddressingBundle\Form;
 
 use Daften\Addressing\Embeddable\AddressEmbeddable;
 use Symfony\Component\Form\AbstractType;
