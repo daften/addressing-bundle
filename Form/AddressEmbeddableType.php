@@ -2,7 +2,7 @@
 
 namespace Daften\Bundle\AddressingBundle\Form;
 
-use Daften\Bundle\AddressingBundle\Embeddable\AddressEmbeddable;
+use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Daften\Bundle\AddressingBundle\Embeddable;
+namespace Daften\Bundle\AddressingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
