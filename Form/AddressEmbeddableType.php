@@ -2,7 +2,7 @@
 
 namespace Daften\Bundle\AddressingBundle\Form;
 
-use Daften\Addressing\Embeddable\AddressEmbeddable;
+use Daften\Bundle\AddressingBundle\Embeddable\AddressEmbeddable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +18,18 @@ class AddressEmbeddableType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
+        $builder
+            ->add('countryCode')
+            ->add('administrativeArea')
+            ->add('locality')
+            ->add('dependentLocality')
+            ->add('sortingCode')
+            ->add('addressLine1')
+            ->add('addressLine2')
+            ->add('organization')
+            ->add('recipient')
+            ->add('locale')
+        ;
     }
 
     /**
