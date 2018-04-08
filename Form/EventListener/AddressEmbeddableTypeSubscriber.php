@@ -2,6 +2,7 @@
 
 namespace Daften\Bundle\AddressingBundle\Form\EventListener;
 
+use CommerceGuys\Addressing\Enum\AddressField;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;
 use CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface;
 use CommerceGuys\Addressing\Repository\SubdivisionRepository;
@@ -60,7 +61,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
     {
         return [
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::POST_SUBMIT => 'postSubmit',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
         ];
     }
 
@@ -85,22 +86,22 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
 
         $form = $event->getForm();
 
-        $form
-            ->add('recipient')
-            ->add('organization')
-            ->add('addressLine1')
-            ->add('addressLine2')
-            ->add('locality')
-            ->add('dependentLocality')
-            ->add('administrativeArea')
-            ->add('sortingCode')
-        ;
+        foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
+            foreach ($line_fields as $field_index => $field) {
+                $form->add($field);
+            }
+        }
+
+        $unused_fields = array_diff(AddressField::getAll(), $addressFormat->getUsedFields());
+        foreach ($unused_fields as $field) {
+            $form->remove($field);
+        }
     }
 
     /**
      * @param FormEvent $event
      */
-    public function postSubmit(FormEvent $event): void
+    public function preSubmit(FormEvent $event): void
     {
         $data = $event->getData();
         if (!is_array($data) || !array_key_exists('countryCode', $data)) {
@@ -112,19 +113,19 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         }
 
         // Get the address format for Country.
-        $addressFormat = $this->addressFormatRepository->get($countryCode);
+        $addressFormat = $this->addressFormatRepository->get($data['countryCode']);
 
         $form = $event->getForm();
 
-        $form
-            ->add('recipient')
-            ->add('organization')
-            ->add('addressLine1')
-            ->add('addressLine2')
-            ->add('locality')
-            ->add('dependentLocality')
-            ->add('administrativeArea')
-            ->add('sortingCode')
-        ;
+        foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
+            foreach ($line_fields as $field_index => $field) {
+                $form->add($field);
+            }
+        }
+
+        $unused_fields = array_diff(AddressField::getAll(), $addressFormat->getUsedFields());
+        foreach ($unused_fields as $field) {
+            $form->remove($field);
+        }
     }
 }
