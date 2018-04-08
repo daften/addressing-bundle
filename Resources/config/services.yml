@@ -1,0 +1,30 @@
+parameters:
+    studenteninternet_fsnl.class.client: 'Studenteninternet\Fsnl\Client\Client'
+    studenteninternet_fsnl.class.configuration: 'Studenteninternet\Fsnl\Client\Configuration\Configuration'
+    studenteninternet_fsnl.class.logger: 'Studenteninternet\FsnlBundle\Logger\StudenteninternetFsnlLogger'
+
+services:
+    daften.form.subscriber.address:
+        class: Daften\Bundle\AddressingBundle\Form\EventListener\AddressEmbeddableTypeSubscriber
+        arguments:
+          - '@form.factory'
+          - '@commerceguys.intl.country.country_repository'
+          - '@commerceguys.addressing.repository.address_format_repository'
+          - '@commerceguys.addressing.repository.subdivision_repository'
+
+    daften.form.type.address:
+        class: Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableType
+        arguments:
+            -  '@daften.form.subscriber.address'
+        public: false
+        tags:
+            - form.type
+
+    commerceguys.intl.country.country_repository:
+        class: 'CommerceGuys\Intl\Country\CountryRepository'
+
+    commerceguys.addressing.repository.address_format_repository:
+        class: 'CommerceGuys\Addressing\Repository\AddressFormatRepository'
+
+    commerceguys.addressing.repository.subdivision_repository:
+        class: 'CommerceGuys\Addressing\Repository\SubdivisionRepository'
