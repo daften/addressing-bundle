@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
 {
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $locale;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $recipient;
 
@@ -67,7 +67,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -75,7 +75,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $locale
      */
-    public function setLocale($locale): void
+    public function setLocale(string $locale = null): void
     {
         $this->locale = $locale;
     }
@@ -83,7 +83,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getRecipient()
+    public function getRecipient(): ?string
     {
         return $this->recipient;
     }
@@ -91,7 +91,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $recipient
      */
-    public function setRecipient($recipient): void
+    public function setRecipient(string $recipient = null): void
     {
         $this->recipient = $recipient;
     }
@@ -99,7 +99,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getOrganization()
+    public function getOrganization(): ?string
     {
         return $this->organization;
     }
@@ -107,7 +107,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $organization
      */
-    public function setOrganization($organization): void
+    public function setOrganization(string $organization = null): void
     {
         $this->organization = $organization;
     }
@@ -131,7 +131,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getAddressLine2()
+    public function getAddressLine2(): ?string
     {
         return $this->addressLine2;
     }
@@ -139,7 +139,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $addressLine2
      */
-    public function setAddressLine2($addressLine2): void
+    public function setAddressLine2(string $addressLine2 = null): void
     {
         $this->addressLine2 = $addressLine2;
     }
@@ -147,7 +147,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getPostalCode()
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
@@ -155,7 +155,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $postalCode
      */
-    public function setPostalCode($postalCode): void
+    public function setPostalCode(string $postalCode = null): void
     {
         $this->postalCode = $postalCode;
     }
@@ -163,7 +163,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getSortingCode()
+    public function getSortingCode(): ?string
     {
         return $this->sortingCode;
     }
@@ -171,7 +171,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $sortingCode
      */
-    public function setSortingCode($sortingCode): void
+    public function setSortingCode(string $sortingCode = null): void
     {
         $this->sortingCode = $sortingCode;
     }
@@ -179,7 +179,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getLocality()
+    public function getLocality(): string
     {
         return $this->locality;
     }
@@ -187,7 +187,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $locality
      */
-    public function setLocality($locality): void
+    public function setLocality(string $locality = null): void
     {
         $this->locality = $locality;
     }
@@ -195,7 +195,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getDependentLocality()
+    public function getDependentLocality(): ?string
     {
         return $this->dependentLocality;
     }
@@ -203,7 +203,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $dependentLocality
      */
-    public function setDependentLocality($dependentLocality): void
+    public function setDependentLocality(string $dependentLocality = null): void
     {
         $this->dependentLocality = $dependentLocality;
     }
@@ -211,7 +211,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getAdministrativeArea()
+    public function getAdministrativeArea(): ?string
     {
         return $this->administrativeArea;
     }
@@ -219,7 +219,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $administrativeArea
      */
-    public function setAdministrativeArea($administrativeArea): void
+    public function setAdministrativeArea(string $administrativeArea = null): void
     {
         $this->administrativeArea = $administrativeArea;
     }
@@ -227,7 +227,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getCountryCode()
+    public function getCountryCode(): string
     {
         return $this->countryCode;
     }
@@ -235,7 +235,7 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @param string $countryCode
      */
-    public function setCountryCode($countryCode): void
+    public function setCountryCode(string $countryCode): void
     {
         $this->countryCode = $countryCode;
     }
