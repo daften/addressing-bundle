@@ -43,7 +43,9 @@ class AddressEmbeddableType extends AbstractType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('countryCode', CountryType::class)
+            ->add('countryCode', CountryType::class,[
+                'placeholder' => ''
+            ])
             ->addEventSubscriber($this->addressEmbeddableTypeSubscriber)
         ;
     }

@@ -60,42 +60,8 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            FormEvents::PRE_SET_DATA => 'preSetData',
             FormEvents::PRE_SUBMIT => 'preSubmit',
         ];
-    }
-
-    /**
-     * @param FormEvent $event
-     */
-    public function preSetData(FormEvent $event): void
-    {
-        /** @var AddressEmbeddable $address */
-        $address = $event->getData();
-        if (null === $address) {
-            return;
-        }
-
-        $countryCode = $address->getCountryCode();
-        if (null === $countryCode) {
-            return;
-        }
-
-        // Get the address format for Country.
-        $addressFormat = $this->addressFormatRepository->get($countryCode);
-
-        $form = $event->getForm();
-
-        foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
-            foreach ($line_fields as $field_index => $field) {
-                $form->add($field);
-            }
-        }
-
-        $unused_fields = array_diff(AddressField::getAll(), $addressFormat->getUsedFields());
-        foreach ($unused_fields as $field) {
-            $form->remove($field);
-        }
     }
 
     /**
