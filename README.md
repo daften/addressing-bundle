@@ -24,7 +24,7 @@ changing the country code work.
 
 The script below gives an example. entity_name is the snake_case formation of
 the entity that contains the address field and has the address form on it's
-form.
+form. This only works when using Symfony 4 with Webpack Encore.
 
 ```javascript
 var countryCodeChange = require('../../public/bundles/addressing/js/countryCodeChange');
