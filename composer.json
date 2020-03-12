@@ -12,8 +12,8 @@
     ],
     "require": {
         "php": "^7.0.8",
-        "commerceguys/addressing": "^0.8",
-        "commerceguys/intl": "^0.7",
+        "commerceguys/addressing": "^1",
+        "commerceguys/intl": "^1",
         "doctrine/orm": "^2.6",
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0"
