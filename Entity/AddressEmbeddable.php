@@ -18,7 +18,17 @@ class AddressEmbeddable extends Address
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $recipient;
+    protected $givenName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $additionalName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $familyName;
 
     /**
      * @ORM\Column(type="string", nullable=true)
