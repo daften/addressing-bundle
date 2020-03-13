@@ -2,12 +2,13 @@
 
 namespace Daften\Bundle\AddressingBundle\Entity;
 
+use CommerceGuys\Addressing\Address;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Embeddable
  */
-class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
+class AddressEmbeddable extends Address
 {
     /**
      * @ORM\Column(type="string", nullable=true)
