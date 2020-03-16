@@ -8,9 +8,9 @@ services:
         class: Daften\Bundle\AddressingBundle\Form\EventListener\AddressEmbeddableTypeSubscriber
         arguments:
           - '@form.factory'
-          - '@commerceguys.intl.country.country_repository'
-          - '@commerceguys.addressing.repository.address_format_repository'
-          - '@commerceguys.addressing.repository.subdivision_repository'
+          - '@commerceguys.addressing.country.country_repository'
+          - '@commerceguys.addressing.address_format.address_format_repository'
+          - '@commerceguys.addressing.subdivision.subdivision_repository'
 
     daften.form.type.address:
         class: Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableType
@@ -20,11 +20,11 @@ services:
         tags:
             - form.type
 
-    commerceguys.intl.country.country_repository:
-        class: 'CommerceGuys\Intl\Country\CountryRepository'
+    commerceguys.addressing.country.country_repository:
+        class: 'CommerceGuys\Addressing\Country\CountryRepository'
 
-    commerceguys.addressing.repository.address_format_repository:
-        class: 'CommerceGuys\Addressing\Repository\AddressFormatRepository'
+    commerceguys.addressing.address_format.address_format_repository:
+        class: 'CommerceGuys\Addressing\AddressFormat\AddressFormatRepository'
 
-    commerceguys.addressing.repository.subdivision_repository:
-        class: 'CommerceGuys\Addressing\Repository\SubdivisionRepository'
+    commerceguys.addressing.subdivision.subdivision_repository:
+        class: 'CommerceGuys\Addressing\Subdivision\SubdivisionRepository'

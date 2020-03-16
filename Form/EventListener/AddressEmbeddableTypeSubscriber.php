@@ -3,12 +3,12 @@
 namespace Daften\Bundle\AddressingBundle\Form\EventListener;
 
 use CommerceGuys\Addressing\Enum\AddressField;
-use CommerceGuys\Addressing\Repository\AddressFormatRepository;
-use CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface;
-use CommerceGuys\Addressing\Repository\SubdivisionRepository;
-use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
-use CommerceGuys\Intl\Country\CountryRepository;
-use CommerceGuys\Intl\Country\CountryRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
+use CommerceGuys\Addressing\Country\CountryRepository;
+use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
