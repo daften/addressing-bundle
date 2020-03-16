@@ -86,15 +86,8 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
 
         $form = $event->getForm();
 
-        foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
-            foreach ($line_fields as $field_index => $field) {
-                $form->add($field);
-            }
-        }
-
-        $unused_fields = array_diff(AddressField::getAll(), $addressFormat->getUsedFields());
-        foreach ($unused_fields as $field) {
-            $form->remove($field);
+        foreach ($addressFormat->getUsedFields() as $field) {
+            $form->add($field);
         }
     }
 
