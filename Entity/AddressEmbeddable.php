@@ -94,17 +94,49 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getRecipient(): ?string
+    public function getAdditionalName(): ?string
     {
-        return $this->recipient;
+        return $this->additionalName;
     }
 
     /**
-     * @param string $recipient
+     * @param string $additionalName
      */
-    public function setRecipient(string $recipient = null): void
+    public function setAdditionalName(string $additionalName = null): void
     {
-        $this->recipient = $recipient;
+        $this->additionalName = $additionalName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGivenName(): ?string
+    {
+        return $this->givenName;
+    }
+
+    /**
+     * @param string $givenName
+     */
+    public function setGivenName(string $givenName = null): void
+    {
+        $this->givenName = $givenName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFamilyName(): ?string
+    {
+        return $this->familyName;
+    }
+
+    /**
+     * @param string $familyName
+     */
+    public function setFamilyName(string $familyName = null): void
+    {
+        $this->familyName = $familyName;
     }
 
     /**
