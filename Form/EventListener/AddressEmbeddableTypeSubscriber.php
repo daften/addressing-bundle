@@ -72,11 +72,16 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
     {
         /** @var AddressEmbeddable $address */
         $address = $event->getData();
+        $form = $event->getForm();
+        $options = $form->getConfig()->getOptions();
+
         if (null === $address) {
-            return;
+            // No address set yet, let's set the country code to the default.
+            $address = new AddressEmbeddable($options['default_country']);
+            $event->setData($address);
         }
 
-        $countryCode = $address->getCountryCode();
+        $countryCode = isset($address) ? $address->getCountryCode() : $options['default_country'];
         if (null === $countryCode) {
             return;
         }
@@ -116,6 +121,12 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         $addressFormat = $this->addressFormatRepository->get($data['countryCode']);
 
         $form = $event->getForm();
+
+        // Remove all form fields first, since they were already set in the pre_set_data for the default country.
+        $all_fields = AddressField::getAll();
+        foreach ($all_fields as $field) {
+            $form->remove($field);
+        }
 
         foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {

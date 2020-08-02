@@ -20,20 +20,20 @@ doctrine:
 ```
 TODO: Explain why this mapping is needed.
 
-You'll also need to add some configuration or javascript depending on the form you'll use for address information.
+You'll also need to add some configuration or javascript depending on the form you'll use for address information. For
+this you need to run `bin/console assets:install` to copy the bundle assets to the public folder.
 
 ### AddressEmbeddableType
 
 You'll also need to add some javascript code, to make sure the form changes on
 changing the country code work.
 
-The script below gives an example. entity_name is the snake_case formation of
-the entity that contains the address field and has the address form on it's
-form. This only works when using Symfony 4 with Webpack Encore.
+The script below gives an example. You just need to initialize the javascript functionality. All address fields will
+automatically be covered. This only works when using Symfony 4 with Webpack Encore.
 
 ```javascript
 var countryCodeChange = require('../../public/bundles/addressing/js/countryCodeChange');
-countryCodeChange.initialize('<entity_name>');
+countryCodeChange.initialize();
 ```
 
 ### AddressGmapsAutocompleteEmbeddableType
@@ -93,7 +93,15 @@ class AddressExample
 
 ### Entity form
 
-An example form for the AddressExample class given above.
+#### AddressEmbeddableType
+
+There are 3 additional options that can be used for this form type:
+* allowed_countries: The countries allowed in the country dropdown. An array where the keys should be the country name
+  and the values should be the 2-character country code.
+* preferred_countries: An array with the preferred countries, using the 2-character country codes.
+* default_country: The default country to show in the country dropdown.
+
+An example form for the AddressExample class given above using the default AddressEmbeddableType with separate fields.
 
 ```php
 <?php
@@ -107,9 +115,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class InstallationAddressType
+ * Class AddressExample
  */
-class InstallationAddressType extends AbstractType
+class AddressExample extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -117,7 +125,15 @@ class InstallationAddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address', AddressEmbeddableType::class);
+            ->add('address', AddressEmbeddableType::class, [
+                 'allowed_countries' => [
+                     'United States' => 'US',
+                     'United Kingdom' => 'UK',
+                     'Belgium' => 'BE',
+                 ],
+                 'preferred_countries' => ['BE', 'US'],
+                 'default_country' => 'US',
+             ]);
     }
 
     /**
