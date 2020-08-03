@@ -23,7 +23,9 @@ services:
     daften.form.type.address_autocomplete_gmaps:
         class: Daften\Bundle\AddressingBundle\Form\Type\AddressGmapsAutocompleteEmbeddableType
         arguments:
-            - '@daften.form.subscriber.address'
+            - '@commerceguys.intl.country.country_repository'
+            - '@commerceguys.addressing.repository.address_format_repository'
+            - '@commerceguys.addressing.repository.subdivision_repository'
         public: false
         tags:
             - form.type

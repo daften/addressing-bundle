@@ -4,8 +4,11 @@ namespace Daften\Bundle\AddressingBundle\Form\Type;
 
 use CommerceGuys\Addressing\Formatter\DefaultFormatter;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;
+use CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface;
 use CommerceGuys\Addressing\Repository\CountryRepository;
 use CommerceGuys\Addressing\Repository\SubdivisionRepository;
+use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
+use CommerceGuys\Intl\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -15,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,6 +27,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AddressGmapsAutocompleteEmbeddableType extends AbstractType
 {
+    /**
+     * @var CountryRepositoryInterface
+     */
+    protected $countryRepository;
+
+    /**
+     * @var AddressFormatRepositoryInterface
+     */
+    protected $addressFormatRepository;
+
+    /**
+     * @var SubdivisionRepositoryInterface
+     */
+    protected $subdivisionRepository;
+
+    public function __construct(
+        CountryRepositoryInterface $countryRepository,
+        AddressFormatRepositoryInterface $addressFormatRepository,
+        SubdivisionRepositoryInterface $subdivisionRepository
+    ) {
+        $this->countryRepository = $countryRepository;
+        $this->addressFormatRepository = $addressFormatRepository;
+        $this->subdivisionRepository = $subdivisionRepository;
+    }
 
     /**
      * {@inheritdoc}
@@ -44,6 +72,7 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
             ->add('addressLine1', HiddenType::class)
             ->add('addressLine2', HiddenType::class)
             ->add('postalCode', HiddenType::class)
+            ->add('sortingCode', HiddenType::class) // TODO
             ->add('locality', HiddenType::class)
             ->add('dependentLocality', HiddenType::class)
             ->add('administrativeArea', HiddenType::class)
@@ -54,9 +83,17 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
             function(FormEvent $event){
                 $address = $event->getData();
                 $form = $event->getForm();
+                $countries = $this->countryRepository->getAll();
 
                 if ($address) {
-                    $form->get('addressAutocomplete')->setData($address);
+                    $address_default = implode(', ', array_filter([
+                        $address->getRecipient(),
+                        $address->getAddressLine1(),
+                        $address->getAddressLine2(),
+                        $address->getPostalCode().' '.$address->getLocality(),
+                        $countries[$address->getCountryCode()]->getName(),
+                    ]));
+                    $form->get('addressAutocomplete')->setData($address_default);
                 }
             }
         );
