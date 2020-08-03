@@ -1,5 +1,4 @@
 module.exports = {
-    // The address form fields are initialized here, these form fields are common for some entity forms and are therefore put in this function
     initialize: function () {
         $(document).ready(function () {
             $('.address-autocomplete-input').once('initiate-autocomplete').each(function () {
@@ -38,9 +37,6 @@ module.exports = {
                             administrative_area_level_1: '[id$=_administrativeArea]',
                             country: '[id$=_countryCode]',
                             postal_code: '[id$=_postalCode]',
-                            // given_name: '.given-name',
-                            // family_name: '.family-name',
-                            // organization: '.organization'
                         };
 
                     autocomplete = new google.maps.places.Autocomplete(
@@ -54,36 +50,12 @@ module.exports = {
                     }
                     autocomplete.addListener('place_changed', fillInAddress);
 
-                    // TODO: Figure out wtf this is for?
-                    if (location.protocol == 'https:' && navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            var geolocation = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
-                            };
-                            var circle = new google.maps.Circle({
-                                center: geolocation,
-                                radius: position.coords.accuracy
-                            });
-                            autocomplete.setBounds(circle.getBounds());
-                        });
-                    }
-
                     // Get wrapper
                     var wrapper = autocompleteField.closest('[id$=_address]');
-                    // wrapper.find('input.address-autocomplete-input').removeClass('address-autocomplete-component--hidden');
-                    // // Hide all other address fields.
-                    // for (var component in address) {
-                    //     var addressField = wrapper.find(address[component]);
-                    //     if (addressField.length) {
-                    //         wrapper.find('label[for="'+addressField.attr('id')+'"]').hide();
-                    //         addressField.hide();
-                    //     }
-                    // }
 
                     function fillInAddress()
                     {
-                        // Fill initial address fields
+                        // Fill initial address fields.
                         var place = autocomplete.getPlace();
                         var country = wrapper.find('select.country').val();
                         if (place && place.address_components) {
@@ -106,12 +78,7 @@ module.exports = {
                                 }
                             }
                         }
-                        // Initiates the ajax event providing appropriate address
-                        // components for a country chosen with Google Places API.
-                        // TODO: Check if we can do this too?
-                        // wrapper.find('select.country').val(country).change();
                     }
-
                 }
             });
         });
