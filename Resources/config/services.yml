@@ -23,12 +23,18 @@ services:
     daften.form.type.address_autocomplete_gmaps:
         class: Daften\Bundle\AddressingBundle\Form\Type\AddressGmapsAutocompleteEmbeddableType
         arguments:
-            - '@commerceguys.intl.country.country_repository'
-            - '@commerceguys.addressing.repository.address_format_repository'
-            - '@commerceguys.addressing.repository.subdivision_repository'
+            - '@Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService'
         public: false
         tags:
             - form.type
+
+    daften.service.gmaps_autocomplete_service:
+        class: Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService
+        arguments:
+            $countryRepository: '@commerceguys.intl.country.country_repository'
+            $addressFormatRepository: '@commerceguys.addressing.repository.address_format_repository'
+            $subdivisionRepository: '@commerceguys.addressing.repository.subdivision_repository'
+            $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
 
     commerceguys.intl.country.country_repository:
         class: 'CommerceGuys\Intl\Country\CountryRepository'

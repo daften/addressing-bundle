@@ -38,9 +38,28 @@ countryCodeChange.initialize();
 
 ### AddressGmapsAutocompleteEmbeddableType
 
-TODO
+You'll also need to add some javascript code, to make sure the autocomplete functionality works.
 
-* Add allowed countries
+The script below gives an example. You just need to initialize the javascript functionality. All autocomplete address
+fields will automatically be covered. This only works when using Symfony 4 with Webpack Encore.
+
+```javascript
+var addressGmapsAutocomplete = require('../../public/bundles/addressing/js/addressGmapsAutocomplete');
+addressGmapsAutocomplete.initialize();
+```
+
+Make sure to define the input for the GmapsAutocompleteService by adding it to your services.yaml file. The API key can
+be added to the .env file. You also need to add the other dependencies. E.g.
+```yaml
+services:
+    ...
+    Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService:
+        arguments:
+            $countryRepository: '@commerceguys.intl.country.country_repository'
+            $addressFormatRepository: '@commerceguys.addressing.repository.address_format_repository'
+            $subdivisionRepository: '@commerceguys.addressing.repository.subdivision_repository'
+            $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
+```
 
 ## Usage
 
@@ -117,7 +136,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class AddressExample
  */
-class AddressExample extends AbstractType
+class AddressExampleType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -134,6 +153,59 @@ class AddressExample extends AbstractType
                  'preferred_countries' => ['BE', 'US'],
                  'default_country' => 'US',
              ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => AddressExample::class,
+        ]);
+    }
+}
+```
+
+#### AddressGmapsAutocompleteEmbeddableType
+
+There is 1 additional option that can be used for this form type:
+* allowed_countries: The countries allowed for autocompletion. An array where the values should be the 2-character
+  country code.
+
+An example form for the AddressExample class given above using the AddressGmapsAutocompleteEmbeddableType with one
+autocomplete fields.
+
+```php
+<?php
+
+namespace App\Form;
+
+use App\Entity\AddressExample;
+use Daften\Bundle\AddressingBundle\Form\Type\AddressGmapsAutocompleteEmbeddableType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Class AddressExample
+ */
+class AddressExampleType2 extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+             ->add('address', AddressGmapsAutocompleteEmbeddableType::class, [
+                'label' => 'address',
+                'translation_domain' => 'address',
+                'allowed_countries' => [
+                    'BE',
+                    'NL',
+                ],
+            ]);
     }
 
     /**

@@ -10,6 +10,7 @@ use CommerceGuys\Addressing\Repository\SubdivisionRepository;
 use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
 use CommerceGuys\Intl\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
+use Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -27,29 +28,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AddressGmapsAutocompleteEmbeddableType extends AbstractType
 {
-    /**
-     * @var CountryRepositoryInterface
-     */
-    protected $countryRepository;
 
     /**
-     * @var AddressFormatRepositoryInterface
+     * @var \Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService
      */
-    protected $addressFormatRepository;
-
-    /**
-     * @var SubdivisionRepositoryInterface
-     */
-    protected $subdivisionRepository;
+    protected $gmapsAutocompleteService;
 
     public function __construct(
-        CountryRepositoryInterface $countryRepository,
-        AddressFormatRepositoryInterface $addressFormatRepository,
-        SubdivisionRepositoryInterface $subdivisionRepository
+        GmapsAutocompleteService $gmapsAutocompleteService
     ) {
-        $this->countryRepository = $countryRepository;
-        $this->addressFormatRepository = $addressFormatRepository;
-        $this->subdivisionRepository = $subdivisionRepository;
+        $this->gmapsAutocompleteService = $gmapsAutocompleteService;
     }
 
     /**
@@ -64,8 +52,8 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
                 'label' => 'Address',
                 'attr' => [
                     'class' => 'address-autocomplete-input',
-                    'data-allowed-countries' => implode('|', $options['allowed_countries']), // TODO
-                    'data-api-key' => 'test', // @TODO
+                    'data-allowed-countries' => implode('|', $options['allowed_countries']),
+                    'data-api-key' => $this->gmapsAutocompleteService->getGmapsApiKey(),
                 ],
             ])
             ->add('countryCode', HiddenType::class)
@@ -83,16 +71,9 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
             function(FormEvent $event){
                 $address = $event->getData();
                 $form = $event->getForm();
-                $countries = $this->countryRepository->getAll();
 
                 if ($address) {
-                    $address_default = implode(', ', array_filter([
-                        $address->getRecipient(),
-                        $address->getAddressLine1(),
-                        $address->getAddressLine2(),
-                        $address->getPostalCode().' '.$address->getLocality(),
-                        $countries[$address->getCountryCode()]->getName(),
-                    ]));
+                    $address_default = $this->gmapsAutocompleteService->addressAutocompleteDefault($address);
                     $form->get('addressAutocomplete')->setData($address_default);
                 }
             }
@@ -109,9 +90,11 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
         $resolver->setDefaults([
             'data_class' => AddressEmbeddable::class,
             'allowed_countries' => [],
+            'gmaps_api_key' => '',
         ]);
 
         $resolver->setAllowedTypes('allowed_countries', ['null', 'string[]']);
+        $resolver->setAllowedTypes('gmaps_api_key', ['string']);
     }
 
     /**
