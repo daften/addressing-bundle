@@ -20,6 +20,14 @@ services:
         tags:
             - form.type
 
+    daften.form.type.address_autocomplete_gmaps:
+        class: Daften\Bundle\AddressingBundle\Form\Type\AddressGmapsAutocompleteEmbeddableType
+        arguments:
+            - '@daften.form.subscriber.address'
+        public: false
+        tags:
+            - form.type
+
     commerceguys.intl.country.country_repository:
         class: 'CommerceGuys\Intl\Country\CountryRepository'
 

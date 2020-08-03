@@ -18,6 +18,11 @@ doctrine:
                     AddressingBundle:
                         is_bundle: true
 ```
+TODO: Explain why this mapping is needed.
+
+You'll also need to add some configuration or javascript depending on the form you'll use for address information.
+
+### AddressEmbeddableType
 
 You'll also need to add some javascript code, to make sure the form changes on
 changing the country code work.
@@ -30,6 +35,12 @@ form. This only works when using Symfony 4 with Webpack Encore.
 var countryCodeChange = require('../../public/bundles/addressing/js/countryCodeChange');
 countryCodeChange.initialize('<entity_name>');
 ```
+
+### AddressGmapsAutocompleteEmbeddableType
+
+TODO
+
+* Add allowed countries
 
 ## Usage
 
