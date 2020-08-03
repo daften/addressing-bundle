@@ -36,7 +36,7 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
                 'label' => 'Address',
                 'attr' => [
                     'class' => 'address-autocomplete-input',
-                    'data-allowed-countries' => implode('|', ['BE']), // TODO
+                    'data-allowed-countries' => implode('|', $options['allowed_countries']), // TODO
                     'data-api-key' => 'test', // @TODO
                 ],
             ])
@@ -48,6 +48,18 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
             ->add('dependentLocality', HiddenType::class)
             ->add('administrativeArea', HiddenType::class)
         ;
+
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function(FormEvent $event){
+                $address = $event->getData();
+                $form = $event->getForm();
+
+                if ($address) {
+                    $form->get('addressAutocomplete')->setData($address);
+                }
+            }
+        );
     }
 
     /**
@@ -61,6 +73,8 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
             'data_class' => AddressEmbeddable::class,
             'allowed_countries' => [],
         ]);
+
+        $resolver->setAllowedTypes('allowed_countries', ['null', 'string[]']);
     }
 
     /**
