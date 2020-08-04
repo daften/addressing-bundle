@@ -134,7 +134,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AddressExample
+ * Class AddressExampleType
  */
 class AddressExampleType extends AbstractType
 {
@@ -174,7 +174,7 @@ There is 1 additional option that can be used for this form type:
   country code.
 
 An example form for the AddressExample class given above using the AddressGmapsAutocompleteEmbeddableType with one
-autocomplete fields.
+autocomplete field.
 
 ```php
 <?php
@@ -188,7 +188,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AddressExample
+ * Class AddressExampleType2
  */
 class AddressExampleType2 extends AbstractType
 {
