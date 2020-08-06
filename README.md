@@ -55,19 +55,8 @@ var addressGmapsAutocomplete = require('../../public/bundles/addressing/js/addre
 addressGmapsAutocomplete.initialize();
 ```
 
-Make sure to define the input for the GmapsAutocompleteService by adding it to your services.yaml file. The API key can
-be added to the .env file. You also need to add the other dependencies. E.g.
-
-```yaml
-services:
-    ...
-    Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService:
-        arguments:
-            $countryRepository: '@commerceguys.intl.country.country_repository'
-            $addressFormatRepository: '@commerceguys.addressing.repository.address_format_repository'
-            $subdivisionRepository: '@commerceguys.addressing.repository.subdivision_repository'
-            $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
-```
+You also need to add the Google API key to the .env file with property key GMAPS_API_KEY. You can override this by
+overruling the service definition for daften.service.gmaps_autocomplete_service.
 
 ## Usage
 
