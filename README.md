@@ -3,9 +3,15 @@
 [![Build Status](https://travis-ci.org/daften/addressing-bundle.svg?branch=develop)](https://travis-ci.org/daften/addressing-bundle)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c8d0411c6ae51c1f1119/maintainability)](https://codeclimate.com/github/daften/addressing-bundle/maintainability)
 
+## Requirements
+
+* jQuery loaded as $
+* jQuery Once loaded properly.
+
 ## Installation
 
 Add the mapping to your doctrine.yaml file:
+
 ```yaml
 doctrine:
     ...
@@ -18,6 +24,7 @@ doctrine:
                     AddressingBundle:
                         is_bundle: true
 ```
+
 TODO: Explain why this mapping is needed.
 
 You'll also need to add some configuration or javascript depending on the form you'll use for address information. For
@@ -36,7 +43,7 @@ var countryCodeChange = require('../../public/bundles/addressing/js/countryCodeC
 countryCodeChange.initialize();
 ```
 
-### AddressGmapsAutocompleteEmbeddableType
+### AddressEmbeddableGmapsAutocompleteType
 
 You'll also need to add some javascript code, to make sure the autocomplete functionality works.
 
@@ -50,6 +57,7 @@ addressGmapsAutocomplete.initialize();
 
 Make sure to define the input for the GmapsAutocompleteService by adding it to your services.yaml file. The API key can
 be added to the .env file. You also need to add the other dependencies. E.g.
+
 ```yaml
 services:
     ...
@@ -115,6 +123,7 @@ class AddressExample
 #### AddressEmbeddableType
 
 There are 3 additional options that can be used for this form type:
+
 * allowed_countries: The countries allowed in the country dropdown. An array where the keys should be the country name
   and the values should be the 2-character country code.
 * preferred_countries: An array with the preferred countries, using the 2-character country codes.
@@ -167,13 +176,14 @@ class AddressExampleType extends AbstractType
 }
 ```
 
-#### AddressGmapsAutocompleteEmbeddableType
+#### AddressEmbeddableGmapsAutocompleteType
 
 There is 1 additional option that can be used for this form type:
+
 * allowed_countries: The countries allowed for autocompletion. An array where the values should be the 2-character
   country code.
 
-An example form for the AddressExample class given above using the AddressGmapsAutocompleteEmbeddableType with one
+An example form for the AddressExample class given above using the AddressEmbeddableGmapsAutocompleteType with one
 autocomplete field.
 
 ```php
@@ -182,7 +192,7 @@ autocomplete field.
 namespace App\Form;
 
 use App\Entity\AddressExample;
-use Daften\Bundle\AddressingBundle\Form\Type\AddressGmapsAutocompleteEmbeddableType;
+use Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableGmapsAutocompleteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -198,7 +208,7 @@ class AddressExampleType2 extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-             ->add('address', AddressGmapsAutocompleteEmbeddableType::class, [
+             ->add('address', AddressEmbeddableGmapsAutocompleteType::class, [
                 'label' => 'address',
                 'translation_domain' => 'address',
                 'allowed_countries' => [

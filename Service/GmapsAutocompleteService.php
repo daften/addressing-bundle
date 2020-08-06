@@ -64,9 +64,10 @@ class GmapsAutocompleteService
         $this->gmapsApiKey = $gmapsApiKey;
     }
 
-    public function addressAutocompleteDefault(AddressEmbeddable $address) {
+    public function addressAutocompleteDefault(AddressEmbeddable $address): string
+    {
         $countries = $this->countryRepository->getAll();
-        $address_default = implode(', ', array_filter([
+        return implode(', ', array_filter([
             $address->getRecipient(),
             $address->getAddressLine1(),
             $address->getAddressLine2(),
@@ -74,5 +75,4 @@ class GmapsAutocompleteService
             $countries[$address->getCountryCode()]->getName(),
         ]));
     }
-
 }

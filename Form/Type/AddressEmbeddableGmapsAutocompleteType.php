@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A form used to have an Embeddable Address form with autocomplete with Gmaps.
  */
-class AddressGmapsAutocompleteEmbeddableType extends AbstractType
+class AddressEmbeddableGmapsAutocompleteType extends AbstractType
 {
 
     /**
@@ -68,7 +68,7 @@ class AddressGmapsAutocompleteEmbeddableType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function(FormEvent $event){
+            function (FormEvent $event){
                 $address = $event->getData();
                 $form = $event->getForm();
 
