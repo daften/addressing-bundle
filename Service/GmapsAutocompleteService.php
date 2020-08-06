@@ -7,6 +7,7 @@ use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
 use CommerceGuys\Intl\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class GmapsAutocompleteService.
@@ -36,16 +37,23 @@ class GmapsAutocompleteService
      */
     protected $gmapsApiKey;
 
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
     public function __construct(
         CountryRepositoryInterface $countryRepository,
         AddressFormatRepositoryInterface $addressFormatRepository,
         SubdivisionRepositoryInterface $subdivisionRepository,
-        string $gmapsApiKey
+        string $gmapsApiKey,
+        RequestStack $requestStack
     ) {
         $this->countryRepository = $countryRepository;
         $this->addressFormatRepository = $addressFormatRepository;
         $this->subdivisionRepository = $subdivisionRepository;
         $this->gmapsApiKey = $gmapsApiKey;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -62,6 +70,14 @@ class GmapsAutocompleteService
     public function setGmapsApiKey(string $gmapsApiKey): void
     {
         $this->gmapsApiKey = $gmapsApiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->requestStack->getCurrentRequest()->getLocale();
     }
 
     public function addressAutocompleteDefault(AddressEmbeddable $address): string

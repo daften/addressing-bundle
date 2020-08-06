@@ -52,6 +52,7 @@ class AddressEmbeddableGmapsAutocompleteType extends AbstractType
                 'label' => 'Address',
                 'attr' => [
                     'class' => 'address-autocomplete-input',
+                    'data-language' => $this->gmapsAutocompleteService->getLocale(),
                     'data-allowed-countries' => implode('|', $options['allowed_countries']),
                     'data-api-key' => $this->gmapsAutocompleteService->getGmapsApiKey(),
                 ],

@@ -35,6 +35,7 @@ services:
             $addressFormatRepository: '@commerceguys.addressing.repository.address_format_repository'
             $subdivisionRepository: '@commerceguys.addressing.repository.subdivision_repository'
             $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
+            $requestStack: '@request_stack'
 
     commerceguys.intl.country.country_repository:
         class: 'CommerceGuys\Intl\Country\CountryRepository'

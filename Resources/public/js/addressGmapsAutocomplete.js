@@ -5,11 +5,12 @@ module.exports = {
                 // The element to work with.
                 var autocompleteField = $(this);
                 var apiKey = $(this).attr('data-api-key');
+                var language = $(this).attr('data-language');
                 var allowedCountries = $(this).attr('data-allowed-countries').split('|');
 
                 // Load Google Maps Javascript API library and ensure it's only loaded once
                 if (typeof(apiLoaded) === 'undefined' || !apiLoaded) {
-                    $.getScript('https://maps.googleapis.com/maps/api/js?key='+apiKey+'&libraries=places', function () {
+                    $.getScript('https://maps.googleapis.com/maps/api/js?key='+apiKey+'&language='+language+'&libraries=places', function () {
                         apiLoaded = true;
                         initiateAutocomplete();
                     });
