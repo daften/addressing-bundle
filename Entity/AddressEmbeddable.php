@@ -64,6 +64,17 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
      */
     protected $countryCode;
 
+    public function __toString(): string
+    {
+        return implode(', ', array_filter([
+            $this->getRecipient(),
+            $this->getAddressLine1(),
+            $this->getAddressLine2(),
+            $this->getPostalCode().' '.$this->getLocality(),
+            $this->getCountryCode(),
+        ]));
+    }
+
     /**
      * @return string
      */
