@@ -69,12 +69,7 @@ module.exports = {
                                     // The place.name == "StreetName StreetNumber".
                                     value = addressType == 'route' ? place.name : value;
                                     if (value.length) {
-                                        if (addressType == 'country') {
-                                            country = value;
-                                        }
-                                        else {
-                                            wrapper.find(address[addressType]).val(value);
-                                        }
+                                        wrapper.find(address[addressType]).val(value);
                                     }
                                 }
                             }
