@@ -74,6 +74,8 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         $address = $event->getData();
         $form = $event->getForm();
         $options = $form->getConfig()->getOptions();
+        $autocompleteOff = (!isset($options['attr']['autocomplete']) || $options['attr']['autocomplete'] === 'off');
+        $element_options = [];
 
         if (null === $address) {
             // No address set yet, let's set the country code to the default.
@@ -91,9 +93,20 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
 
         $form = $event->getForm();
 
+        if ($autocompleteOff) {
+            $element_options = [
+                'attr' => [
+                    'autocomplete' => 'off',
+                ],
+            ];
+        }
         foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
-                $form->add($field);
+                $form->add(
+                    $field,
+                    null,
+                    $element_options
+                );
             }
         }
 
