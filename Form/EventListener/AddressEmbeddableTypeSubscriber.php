@@ -2,13 +2,14 @@
 
 namespace Daften\Bundle\AddressingBundle\Form\EventListener;
 
-use CommerceGuys\Addressing\Enum\AddressField;
-use CommerceGuys\Addressing\Repository\AddressFormatRepository;
-use CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface;
-use CommerceGuys\Addressing\Repository\SubdivisionRepository;
-use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
-use CommerceGuys\Intl\Country\CountryRepository;
-use CommerceGuys\Intl\Country\CountryRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatHelper;
+use CommerceGuys\Addressing\AddressFormat\AddressField;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
+use CommerceGuys\Addressing\Country\CountryRepository;
+use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -100,7 +101,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
                 ],
             ];
         }
-        foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
+        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat()) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
                 $form->add(
                     $field,
@@ -141,7 +142,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
             $form->remove($field);
         }
 
-        foreach ($addressFormat->getGroupedFields() as $line_index => $line_fields) {
+        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat()) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
                 $form->add($field);
             }
