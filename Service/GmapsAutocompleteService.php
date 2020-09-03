@@ -83,12 +83,18 @@ class GmapsAutocompleteService
     public function addressAutocompleteDefault(AddressEmbeddable $address): string
     {
         $countries = $this->countryRepository->getAll();
-        return implode(', ', array_filter([
-            $address->getRecipient(),
-            $address->getAddressLine1(),
-            $address->getAddressLine2(),
-            $address->getPostalCode().' '.$address->getLocality(),
-            $countries[$address->getCountryCode()]->getName(),
-        ]));
+
+        return trim(implode(
+            ', ',
+            array_filter(
+                [
+                    $address->getRecipient(),
+                    $address->getAddressLine1(),
+                    $address->getAddressLine2(),
+                    $address->getPostalCode().' '.$address->getLocality(),
+                    !empty($address->getCountryCode()) ? $countries[$address->getCountryCode()]->getName() : '',
+                ]
+            )
+        ));
     }
 }
