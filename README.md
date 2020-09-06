@@ -70,6 +70,7 @@ You need to add an address field as an ORM Embedded property.
 namespace App\Entity;
 
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
+use Daften\Bundle\AddressingBundle\Validator\Constraints as AddressingBundleAssert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -79,6 +80,13 @@ class AddressExample
 {
     /**
      * @ORM\Embedded(class="Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable")
+     * @AddressingBundleAssert\EmbeddedAddressFormatConstraint(fields={
+     *     "locale",
+     *     "addressLine1",
+     *     "postalCode",
+     *     "locality",
+     *     "countryCode",
+     * })
      */
     private $address;
 

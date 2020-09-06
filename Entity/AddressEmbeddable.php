@@ -2,12 +2,13 @@
 
 namespace Daften\Bundle\AddressingBundle\Entity;
 
+use CommerceGuys\Addressing\Address;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Embeddable
  */
-class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
+class AddressEmbeddable extends Address
 {
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -17,7 +18,17 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $recipient;
+    protected $givenName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $additionalName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $familyName;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -94,17 +105,49 @@ class AddressEmbeddable extends \CommerceGuys\Addressing\Model\Address
     /**
      * @return string
      */
-    public function getRecipient(): ?string
+    public function getAdditionalName(): ?string
     {
-        return $this->recipient;
+        return $this->additionalName;
     }
 
     /**
-     * @param string $recipient
+     * @param string $additionalName
      */
-    public function setRecipient(string $recipient = null): void
+    public function setAdditionalName(string $additionalName = null): void
     {
-        $this->recipient = $recipient;
+        $this->additionalName = $additionalName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGivenName(): ?string
+    {
+        return $this->givenName;
+    }
+
+    /**
+     * @param string $givenName
+     */
+    public function setGivenName(string $givenName = null): void
+    {
+        $this->givenName = $givenName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFamilyName(): ?string
+    {
+        return $this->familyName;
+    }
+
+    /**
+     * @param string $familyName
+     */
+    public function setFamilyName(string $familyName = null): void
+    {
+        $this->familyName = $familyName;
     }
 
     /**
