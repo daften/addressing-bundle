@@ -24,6 +24,7 @@ services:
         class: Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableGmapsAutocompleteType
         arguments:
             - '@daften.service.gmaps_autocomplete_service'
+            - '@daften.service.address_output_service'
         public: false
         tags:
             - form.type

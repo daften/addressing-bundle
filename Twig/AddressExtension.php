@@ -33,8 +33,18 @@ final class AddressExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
+            new TwigFunction('address_default', [$this, 'addressDefault'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('address_plain', [$this, 'addressPlain'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('address_inline', [$this, 'addressInline'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
+    }
+
+    /**
+     * Renders the address.
+     */
+    public function addressDefault(Environment $env, AddressEmbeddable $addressEmbeddable): string
+    {
+        return $this->addressOutputService->getAddressDefault($addressEmbeddable);
     }
 
     /**
@@ -46,6 +56,14 @@ final class AddressExtension extends AbstractExtension
             '@Addressing/address-plain.html.twig',
             $this->addressOutputService->getAddressPlain($addressEmbeddable)
         );
+    }
+
+    /**
+     * Renders the address as an inline address.
+     */
+    public function addressInline(Environment $env, AddressEmbeddable $addressEmbeddable): string
+    {
+        return $this->addressOutputService->getAddressInline($addressEmbeddable);
     }
 
 }

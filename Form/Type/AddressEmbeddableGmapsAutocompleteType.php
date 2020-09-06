@@ -10,6 +10,7 @@ use CommerceGuys\Addressing\Repository\SubdivisionRepository;
 use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
 use CommerceGuys\Intl\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
+use Daften\Bundle\AddressingBundle\Service\AddressOutputService;
 use Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -30,14 +31,21 @@ class AddressEmbeddableGmapsAutocompleteType extends AbstractType
 {
 
     /**
-     * @var \Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService
+     * @var GmapsAutocompleteService
      */
     protected $gmapsAutocompleteService;
 
+    /**
+     * @var AddressOutputService
+     */
+    protected $addressOutputService;
+
     public function __construct(
-        GmapsAutocompleteService $gmapsAutocompleteService
+        GmapsAutocompleteService $gmapsAutocompleteService,
+        AddressOutputService $addressOutputService
     ) {
         $this->gmapsAutocompleteService = $gmapsAutocompleteService;
+        $this->addressOutputService = $addressOutputService;
     }
 
     /**
@@ -74,7 +82,7 @@ class AddressEmbeddableGmapsAutocompleteType extends AbstractType
                 $form = $event->getForm();
 
                 if ($address) {
-                    $address_default = $this->gmapsAutocompleteService->addressAutocompleteDefault($address);
+                    $address_default = $this->addressOutputService->getAddressInline($address);
                     $form->get('addressAutocomplete')->setData($address_default);
                 }
             }
