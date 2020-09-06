@@ -2,9 +2,9 @@
 
 namespace Daften\Bundle\AddressingBundle\Service;
 
-use CommerceGuys\Addressing\Repository\AddressFormatRepositoryInterface;
-use CommerceGuys\Addressing\Repository\SubdivisionRepositoryInterface;
-use CommerceGuys\Intl\Country\CountryRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -88,13 +88,13 @@ class GmapsAutocompleteService
             ', ',
             array_filter(
                 [
-                    $address->getRecipient(),
+                    $address->getGivenName().' '.$address->getAdditionalName().' '.$address->getFamilyName(),
                     $address->getAddressLine1(),
                     $address->getAddressLine2(),
                     $address->getPostalCode().' '.$address->getLocality(),
                     !empty($address->getCountryCode()) ? $countries[$address->getCountryCode()]->getName() : '',
                 ]
             )
-        ));
+        ), ' ,');
     }
 }
