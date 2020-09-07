@@ -79,22 +79,4 @@ class GmapsAutocompleteService
     {
         return $this->requestStack->getCurrentRequest()->getLocale();
     }
-
-    public function addressAutocompleteDefault(AddressEmbeddable $address): string
-    {
-        $countries = $this->countryRepository->getAll();
-
-        return trim(implode(
-            ', ',
-            array_filter(
-                [
-                    $address->getGivenName().' '.$address->getAdditionalName().' '.$address->getFamilyName(),
-                    $address->getAddressLine1(),
-                    $address->getAddressLine2(),
-                    $address->getPostalCode().' '.$address->getLocality(),
-                    !empty($address->getCountryCode()) ? $countries[$address->getCountryCode()]->getName() : '',
-                ]
-            )
-        ), ' ,');
-    }
 }

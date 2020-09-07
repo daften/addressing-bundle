@@ -24,6 +24,7 @@ services:
         class: Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableGmapsAutocompleteType
         arguments:
             - '@daften.service.gmaps_autocomplete_service'
+            - '@daften.service.address_output_service'
         public: false
         tags:
             - form.type
@@ -36,6 +37,22 @@ services:
             $subdivisionRepository: '@commerceguys.addressing.subdivision.subdivision_repository'
             $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
             $requestStack: '@request_stack'
+
+    daften.service.address_output_service:
+        class: Daften\Bundle\AddressingBundle\Service\AddressOutputService
+        arguments:
+            $countryRepository: '@commerceguys.addressing.country.country_repository'
+            $addressFormatRepository: '@commerceguys.addressing.address_format.address_format_repository'
+            $subdivisionRepository: '@commerceguys.addressing.subdivision.subdivision_repository'
+            $requestStack: '@request_stack'
+
+
+    daften.twig.extension.address:
+        class: Daften\Bundle\AddressingBundle\Twig\AddressExtension
+        arguments:
+            $addressOutputService: '@daften.service.address_output_service'
+        tags:
+            - twig.extension
 
     commerceguys.addressing.country.country_repository:
         class: 'CommerceGuys\Addressing\Country\CountryRepository'
