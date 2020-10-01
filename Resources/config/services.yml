@@ -11,6 +11,7 @@ services:
           - '@commerceguys.addressing.country.country_repository'
           - '@commerceguys.addressing.address_format.address_format_repository'
           - '@commerceguys.addressing.subdivision.subdivision_repository'
+          - '@?validator'
 
     daften.form.type.address:
         class: Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableType
