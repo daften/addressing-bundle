@@ -11,11 +11,16 @@ use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
 use CommerceGuys\Addressing\Country\CountryRepository;
 use CommerceGuys\Addressing\Country\CountryRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
+use Daften\Bundle\AddressingBundle\Validator\Constraints\EmbeddedAddressFormatConstraint;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Exception\NoSuchMetadataException;
+use Symfony\Component\Validator\Mapping\PropertyMetadataInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
 {
@@ -40,6 +45,11 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
     private $formFactory;
 
     /**
+     * @var ?ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * @param CountryRepositoryInterface $countryRepository
      * @param FormFactoryInterface $factory
      */
@@ -47,12 +57,14 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         FormFactoryInterface $factory,
         CountryRepositoryInterface $countryRepository,
         AddressFormatRepositoryInterface $addressFormatRepository,
-        SubdivisionRepositoryInterface $subdivisionRepository
+        SubdivisionRepositoryInterface $subdivisionRepository,
+        ValidatorInterface $validator = null
     ) {
         $this->formFactory = $factory;
         $this->countryRepository = $countryRepository;
         $this->addressFormatRepository = $addressFormatRepository;
         $this->subdivisionRepository = $subdivisionRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -101,7 +113,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
                 ],
             ];
         }
-        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat()) as $line_index => $line_fields) {
+        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat(), $this->getFieldOverrides($form)) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
                 $form->add(
                     $field,
@@ -142,7 +154,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
             $form->remove($field);
         }
 
-        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat()) as $line_index => $line_fields) {
+        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat(), $this->getFieldOverrides($form)) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
                 $form->add($field);
             }
@@ -152,5 +164,41 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         foreach ($unused_fields as $field) {
             $form->remove($field);
         }
+    }
+
+    private function getFieldOverrides(FormInterface $form)
+    {
+        if (!$this->validator) {
+            return null;
+        }
+
+        $formParent = $form->getParent();
+        if (!$formParent) {
+            return null;
+        }
+
+        $parentEntity = $formParent->getData();
+        if (!is_object($parentEntity)) {
+            return null;
+        }
+
+        try {
+            $metadata = $this->validator->getMetadataFor(get_class($parentEntity));
+        } catch (NoSuchMetadataException $e) {
+            return null;
+        }
+
+        $propertyMetadatas = $metadata->getPropertyMetadata($form->getName());
+        /** @var PropertyMetadataInterface $propertyMetadata */
+        foreach ($propertyMetadatas as $propertyMetadata) {
+            $constraints = $propertyMetadata->getConstraints();
+            foreach ($constraints as $constraint) {
+                if ($constraint instanceof EmbeddedAddressFormatConstraint) {
+                    return $constraint->fieldOverrides;
+                }
+            }
+        }
+
+        return null;
     }
 }
