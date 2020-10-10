@@ -2,6 +2,7 @@ var countryCodeChange = require('./countryCodeChange');
 module.exports = {
     initialize: function () {
         countryCodeChange.initialize();
+
         $(document).ready(function () {
             $('.address-autocomplete-input').once('initiate-autocomplete').each(function () {
                 initializeAutoComplete($(this));
@@ -22,6 +23,7 @@ module.exports = {
             } else {
                 createAutoCompleteInstance();
             }
+
             function createAutoCompleteInstance() {
 
                 var autocomplete,
@@ -58,7 +60,7 @@ module.exports = {
                     fillInAddress(autocomplete.getPlace());
                 });
 
-                // Get wrapper
+                // Get wrapper.
                 var wrapper = $autocompleteField.closest('[id$=_address]');
                 wrapper.closest('form').on('countryCodeChanged', '.address-embeddable', function () {
                     $(this).find('.address-autocomplete-input').once('initiate-autocomplete').each(function () {
@@ -85,18 +87,17 @@ module.exports = {
                     // country code change.
                     $countryCodeField = wrapper.find('[id$=_countryCode]');
                     if (place && place.address_components) {
-                        // Get each component of the address from the place details
-                        // and fill the corresponding field on the form.
                         for (var i = 0; i < place.address_components.length; i++) {
                             var addressType = place.address_components[i].types[0];
                             if (addressType !== 'country') {
                                 continue;
                             }
+
                             if (componentForm[addressType]) {
                                 var value = place.address_components[i][componentForm[addressType]];
                                 if (value && value.length && $countryCodeField.val() !== value) {
                                     $countryCodeField.val(value).trigger('change');
-                                    // No use filling in the reset of the
+                                    // No use filling in the rest of the
                                     // fields as they might change because the
                                     // country code change triggers an ajax
                                     // call to update the form.
@@ -128,7 +129,6 @@ module.exports = {
                             case 'route':
                                 street = place.address_components[i].long_name;
                                 break;
-
 
                             case 'street_number':
                                 streetNumber = place.address_components[i].long_name;
