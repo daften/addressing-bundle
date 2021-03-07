@@ -78,10 +78,17 @@ class AddressEmbeddable extends Address
     public function __toString(): string
     {
         return implode(', ', array_filter([
-            $this->getRecipient(),
+            implode(' ', \array_filter([
+                $this->getGivenName(),
+                $this->getAdditionalName(),
+                $this->getFamilyName(),
+            ])),
             $this->getAddressLine1(),
             $this->getAddressLine2(),
-            $this->getPostalCode().' '.$this->getLocality(),
+            implode(' ', \array_filter([
+                $this->getPostalCode(),
+                $this->getLocality(),
+            ])),
             $this->getCountryCode(),
         ]));
     }
