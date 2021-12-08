@@ -60,6 +60,8 @@ module.exports = {
                     fillInAddress(autocomplete.getPlace());
                 });
 
+                $autoCompleteField.trigger('autoCompleteCreated', [autocomplete]);
+
                 // Get wrapper.
                 var wrapper = $autocompleteField.closest('[id$=_address]');
                 wrapper.closest('form').on('countryCodeChanged', '.address-embeddable', function () {
