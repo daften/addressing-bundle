@@ -60,7 +60,7 @@ module.exports = {
                     fillInAddress(autocomplete.getPlace());
                 });
 
-                $autoCompleteField.trigger('autoCompleteCreated', [autocomplete]);
+                $autocompleteField.trigger('autoCompleteCreated', [autocomplete]);
 
                 // Get wrapper.
                 var wrapper = $autocompleteField.closest('[id$=_address]');
