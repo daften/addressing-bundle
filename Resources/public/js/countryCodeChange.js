@@ -26,7 +26,9 @@ module.exports = {
                             $address.replaceWith(
                                 $(html).find('#' + id)
                             );
-                            $form.find('#' + id + '_countryCode').change(onCountryCodeChange);
+                            var $countryCode = $form.find('#' + id + '_countryCode');
+                            $countryCode.change(onCountryCodeChange);
+                            $countryCode.closest('.address-embeddable').trigger('countryCodeChanged');
                         }
                     });
                 };

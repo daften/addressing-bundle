@@ -11,11 +11,11 @@
         }
     ],
     "require": {
-        "php": "^7.0.8",
+        "php": "^7.2.8",
         "commerceguys/addressing": "^1",
         "doctrine/orm": "^2.6",
-        "symfony/form": "^4.0",
-        "symfony/framework-bundle": "^4.0"
+        "symfony/form": "^4.4 | ^5.3",
+        "symfony/framework-bundle": "^4.4 | ^5.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.10",
@@ -32,7 +32,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-develop": "1.0-dev"
         }
     }
 }

@@ -26,6 +26,7 @@ services:
         arguments:
             - '@daften.service.gmaps_autocomplete_service'
             - '@daften.service.address_output_service'
+            -  '@daften.form.subscriber.address'
         public: false
         tags:
             - form.type

@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A form used to have an Embeddable Address form with autocomplete with Gmaps.
  */
-class AddressEmbeddableGmapsAutocompleteType extends AbstractType
+class AddressEmbeddableGmapsAutocompleteType extends AddressEmbeddableType
 {
 
     /**
@@ -42,8 +42,10 @@ class AddressEmbeddableGmapsAutocompleteType extends AbstractType
 
     public function __construct(
         GmapsAutocompleteService $gmapsAutocompleteService,
-        AddressOutputService $addressOutputService
+        AddressOutputService $addressOutputService,
+        EventSubscriberInterface $addressEmbeddableTypeSubscriber
     ) {
+        parent::__construct($addressEmbeddableTypeSubscriber);
         $this->gmapsAutocompleteService = $gmapsAutocompleteService;
         $this->addressOutputService = $addressOutputService;
     }
@@ -53,27 +55,19 @@ class AddressEmbeddableGmapsAutocompleteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
         $builder
             ->add('addressAutocomplete', TextType::class, [
                 'mapped' => false,
-                'label' => 'Address',
+                'label' => 'addressAutocomplete',
+                'help' => 'This field is used to search an address on Google and fill it out below. This could override other values!',
                 'attr' => [
                     'class' => 'address-autocomplete-input',
                     'data-language' => $this->gmapsAutocompleteService->getLocale(),
                     'data-allowed-countries' => implode('|', $options['allowed_countries']),
                     'data-api-key' => $this->gmapsAutocompleteService->getGmapsApiKey(),
                 ],
-            ])
-            ->add('countryCode', HiddenType::class)
-            ->add('addressLine1', HiddenType::class)
-            ->add('addressLine2', HiddenType::class)
-            ->add('postalCode', HiddenType::class)
-            ->add('sortingCode', HiddenType::class) // TODO
-            ->add('locality', HiddenType::class)
-            ->add('dependentLocality', HiddenType::class)
-            ->add('administrativeArea', HiddenType::class)
-        ;
+            ]);
+        parent::buildForm($builder, $options);
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
