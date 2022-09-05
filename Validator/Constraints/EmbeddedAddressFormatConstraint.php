@@ -2,6 +2,7 @@
 
 namespace Daften\Bundle\AddressingBundle\Validator\Constraints;
 
+use CommerceGuys\Addressing\AddressFormat\FieldOverrides;
 use CommerceGuys\Addressing\Validator\Constraints\AddressFormatConstraint;
 use CommerceGuys\Addressing\Validator\Constraints\AddressFormatConstraintValidator;
 
@@ -10,13 +11,21 @@ use CommerceGuys\Addressing\Validator\Constraints\AddressFormatConstraintValidat
  *
  * @codeCoverageIgnore
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class EmbeddedAddressFormatConstraint extends AddressFormatConstraint
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getTargets()
-    {
-        return self::PROPERTY_CONSTRAINT;
-    }
+  public function __construct($options = null, $fieldOverrides = [])
+  {
+    $this->fieldOverrides = new FieldOverrides($fieldOverrides);
+
+    parent::__construct($options);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTargets()
+  {
+    return self::PROPERTY_CONSTRAINT;
+  }
 }
