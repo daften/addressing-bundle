@@ -79,18 +79,18 @@ class AddressExample
 {
 
     #[ORM\Embedded(class: AddressEmbeddable::class)]
-    #[AddressingBundleAssert\EmbeddedAddressFormatConstraint(fields: [
-        'addressLine1'
-        'postalCode'
-        'locality'
-        'organization'
-        'givenName'
-        'familyName'
-        'addressLine2'
-        'additionalName'
-        'administrativeArea'
-        'dependentLocality'
-        'sortingCode'
+    #[AddressingBundleAssert\EmbeddedAddressFormatConstraint(fieldOverrides: [
+        'addressLine1' => 'required',
+        'postalCode' => 'required',
+        'locality' => 'required',
+        'organization' => 'required',
+        'givenName' => 'required',
+        'familyName' => 'required',
+        'addressLine2' => 'optional',
+        'additionalName' => 'hidden',
+        'administrativeArea' => 'hidden',
+        'dependentLocality' => 'hidden',
+        'sortingCode' => 'hidden',
     ])]
     private AddressEmbeddable $address;
 
