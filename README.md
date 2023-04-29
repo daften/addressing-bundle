@@ -69,32 +69,37 @@ You need to add an address field as an ORM Embedded property.
 
 namespace App\Entity;
 
+use App\Repository\InstallationAddressRepository;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Daften\Bundle\AddressingBundle\Validator\Constraints as AddressingBundleAssert;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\InstallationAddressRepository")
- */
+#[ORM\Entity(repositoryClass: InstallationAddressRepository::class)]
 class AddressExample
 {
-    /**
-     * @ORM\Embedded(class="Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable")
-     * @AddressingBundleAssert\EmbeddedAddressFormatConstraint(fields={
-     *     "locale",
-     *     "addressLine1",
-     *     "postalCode",
-     *     "locality",
-     *     "countryCode",
-     * })
-     */
-    private $address;
+
+    #[ORM\Embedded(class: AddressEmbeddable::class)]
+    #[AddressingBundleAssert\EmbeddedAddressFormatConstraint(fields: [
+        'addressLine1'
+        'postalCode'
+        'locality'
+        'organization'
+        'givenName'
+        'familyName'
+        'addressLine2'
+        'additionalName'
+        'administrativeArea'
+        'dependentLocality'
+        'sortingCode'
+    ])]
+    private AddressEmbeddable $address;
 
     /**
      * AddressExample constructor.
      */
     public function __construct()
     {
+        $this->address = new AddressEmbeddable();
     }
 
     /**
