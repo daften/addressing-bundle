@@ -18,7 +18,7 @@
         "symfony/framework-bundle": "^4.4 | ^5.3 | ^6.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.10",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "symfony/phpunit-bridge": "^4.0"
     },
     "config": {
