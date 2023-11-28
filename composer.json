@@ -1,5 +1,5 @@
 {
-    "name": "daften/addressing-bundle",
+    "name": "outofbox/addressing-bundle",
     "description": "Provides an integration between commerceguys addressing package and Symfony.",
     "type": "library",
     "license": "MIT",
@@ -8,6 +8,11 @@
         {
             "name": "daften",
             "email": "dieterblomme@gmail.com"
+        },
+        {
+            "name": "Out Of Box Lab",
+            "email": "github@outofboxlab.com",
+            "homepage": "https://outofboxlab.com"
         }
     ],
     "require": {
