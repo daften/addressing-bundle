@@ -13,67 +13,67 @@ class AddressEmbeddable extends Address
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $locale;
+    protected string $locale;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $givenName;
+    protected string $givenName;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $additionalName;
+    protected string $additionalName;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $familyName;
+    protected string $familyName;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $organization;
+    protected string $organization;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $addressLine1;
+    protected string $addressLine1;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $addressLine2;
+    protected string $addressLine2;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $postalCode;
+    protected string $postalCode;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $sortingCode;
+    protected string $sortingCode;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $locality;
+    protected string $locality;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $dependentLocality;
+    protected string $dependentLocality;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $administrativeArea;
+    protected string $administrativeArea;
 
     /**
      * @ORM\Column(type="string", length=2, nullable=true)
      */
-    protected $countryCode;
+    protected string $countryCode;
 
     public function __toString(): string
     {
@@ -96,7 +96,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getLocale(): ?string
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -112,7 +112,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getAdditionalName(): ?string
+    public function getAdditionalName(): string
     {
         return $this->additionalName;
     }
@@ -128,7 +128,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getGivenName(): ?string
+    public function getGivenName(): string
     {
         return $this->givenName;
     }
@@ -144,7 +144,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getFamilyName(): ?string
+    public function getFamilyName(): string
     {
         return $this->familyName;
     }
@@ -160,7 +160,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getOrganization(): ?string
+    public function getOrganization(): string
     {
         return $this->organization;
     }
@@ -176,7 +176,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getAddressLine1(): ?string
+    public function getAddressLine1(): string
     {
         return $this->addressLine1;
     }
@@ -192,7 +192,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getAddressLine2(): ?string
+    public function getAddressLine2(): string
     {
         return $this->addressLine2;
     }
@@ -208,7 +208,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getPostalCode(): ?string
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
@@ -224,7 +224,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getSortingCode(): ?string
+    public function getSortingCode(): string
     {
         return $this->sortingCode;
     }
@@ -240,7 +240,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getLocality(): ?string
+    public function getLocality(): string
     {
         return $this->locality;
     }
@@ -256,7 +256,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getDependentLocality(): ?string
+    public function getDependentLocality(): string
     {
         return $this->dependentLocality;
     }
@@ -272,7 +272,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getAdministrativeArea(): ?string
+    public function getAdministrativeArea(): string
     {
         return $this->administrativeArea;
     }
@@ -288,7 +288,7 @@ class AddressEmbeddable extends Address
     /**
      * @return string
      */
-    public function getCountryCode(): ?string
+    public function getCountryCode(): string
     {
         return $this->countryCode;
     }
