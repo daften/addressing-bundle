@@ -174,6 +174,17 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         foreach ($unused_fields as $field) {
             $form->remove($field);
         }
+
+        if ($form->getData() !== $data) {
+            $addressEmbeddable = new AddressEmbeddable();
+            foreach ($data as $field => $value) {
+                $method = 'set'.ucfirst($field);
+                if (method_exists($addressEmbeddable, $method)) {
+                    $addressEmbeddable->{$method}($value);
+                }
+            }
+            $form->setData($addressEmbeddable);
+        }
     }
 
     private function getFieldOverrides(FormInterface $form)
