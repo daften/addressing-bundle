@@ -6,6 +6,7 @@ use CommerceGuys\Addressing\AddressFormat\AddressFormatHelper;
 use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
 use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\FieldOverrides;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
 use CommerceGuys\Addressing\Country\CountryRepository;
@@ -176,26 +177,26 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function getFieldOverrides(FormInterface $form)
+    private function getFieldOverrides(FormInterface $form): FieldOverrides
     {
         if (!$this->validator) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         $formParent = $form->getParent();
         if (!$formParent) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         $parentEntity = $formParent->getData();
         if (!is_object($parentEntity)) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         try {
             $metadata = $this->validator->getMetadataFor(get_class($parentEntity));
         } catch (NoSuchMetadataException $e) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         $propertyMetadatas = $metadata->getPropertyMetadata($form->getName());
@@ -209,6 +210,6 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
             }
         }
 
-        return null;
+        return new FieldOverrides([]);
     }
 }
