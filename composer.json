@@ -11,14 +11,14 @@
         }
     ],
     "require": {
-        "php": ">=7.2.8",
-        "commerceguys/addressing": "^1",
+        "php": "^7.4 | ^8.0",
+        "commerceguys/addressing": "^2",
         "doctrine/orm": "^2.6",
-        "symfony/form": "^4.4 | ^5.3",
-        "symfony/framework-bundle": "^4.4 | ^5.3"
+        "symfony/form": "^4.4 | ^5.3 | ^6.0",
+        "symfony/framework-bundle": "^4.4 | ^5.3 | ^6.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.10",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "symfony/phpunit-bridge": "^4.0"
     },
     "config": {
@@ -29,10 +29,5 @@
     },
     "autoload": {
         "psr-4": { "Daften\\Bundle\\AddressingBundle\\": "" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.0-dev"
-        }
     }
 }
