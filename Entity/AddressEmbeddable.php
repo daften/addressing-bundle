@@ -133,6 +133,11 @@ class AddressEmbeddable extends Address
         $this->addressLine2 = $addressLine2;
     }
 
+    public function setAddressLine3(string $addressLine3): void
+    {
+        $this->addressLine3 = $addressLine3;
+    }
+
     public function setPostalCode(string $postalCode): void
     {
         $this->postalCode = $postalCode;
@@ -161,10 +166,5 @@ class AddressEmbeddable extends Address
     public function setCountryCode(string $countryCode): void
     {
         $this->countryCode = $countryCode;
-    }
-
-    public function setAddressLine3(string $addressLine3): void
-    {
-        $this->addressLine3 = $addressLine3;
     }
 }
