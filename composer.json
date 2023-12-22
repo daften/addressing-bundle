@@ -29,10 +29,5 @@
     },
     "autoload": {
         "psr-4": { "Daften\\Bundle\\AddressingBundle\\": "" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.1.3-dev"
-        }
     }
 }

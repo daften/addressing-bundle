@@ -45,6 +45,9 @@ class AddressEmbeddable extends Address
      */
     protected string $addressLine2 = '';
 
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
     protected string $addressLine3 = '';
 
     /**
