@@ -163,4 +163,8 @@ class AddressEmbeddable extends Address
         $this->countryCode = $countryCode;
     }
 
+    public function setAddressLine3(string $addressLine3): void
+    {
+        $this->addressLine3 = $addressLine3;
+    }
 }
