@@ -6,6 +6,7 @@ use CommerceGuys\Addressing\AddressFormat\AddressFormatHelper;
 use CommerceGuys\Addressing\AddressFormat\AddressField;
 use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
 use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
+use CommerceGuys\Addressing\AddressFormat\FieldOverrides;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
 use CommerceGuys\Addressing\Country\CountryRepository;
@@ -113,8 +114,18 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
                 ],
             ];
         }
-        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat(), $this->getFieldOverrides($form)) as $line_index => $line_fields) {
+
+        $fieldOverrides = $this->getFieldOverrides($form);
+        $requiredFields = AddressFormatHelper::getRequiredFields($addressFormat, $fieldOverrides);
+
+        foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat(), $fieldOverrides) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
+                if (in_array($field, $requiredFields)) {
+                    $element_options['required'] = true;
+                } elseif (isset($element_options['required'])) {
+                    unset($element_options['required']);
+                }
+
                 $form->add(
                     $field,
                     null,
@@ -164,28 +175,39 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         foreach ($unused_fields as $field) {
             $form->remove($field);
         }
+
+        if ($form->getData() !== $data) {
+            $addressEmbeddable = new AddressEmbeddable();
+            foreach ($data as $field => $value) {
+                $method = 'set'.ucfirst($field);
+                if (method_exists($addressEmbeddable, $method)) {
+                    $addressEmbeddable->{$method}($value);
+                }
+            }
+            $form->setData($addressEmbeddable);
+        }
     }
 
-    private function getFieldOverrides(FormInterface $form)
+    private function getFieldOverrides(FormInterface $form): FieldOverrides
     {
         if (!$this->validator) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         $formParent = $form->getParent();
         if (!$formParent) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         $parentEntity = $formParent->getData();
         if (!is_object($parentEntity)) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         try {
             $metadata = $this->validator->getMetadataFor(get_class($parentEntity));
         } catch (NoSuchMetadataException $e) {
-            return null;
+            return new FieldOverrides([]);
         }
 
         $propertyMetadatas = $metadata->getPropertyMetadata($form->getName());
@@ -199,6 +221,6 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
             }
         }
 
-        return null;
+        return new FieldOverrides([]);
     }
 }
