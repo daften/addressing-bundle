@@ -15,7 +15,7 @@ class EmbeddedAddressFormatConstraintValidator extends AddressFormatConstraintVa
      * @param mixed         $invalidValue   The invalid, validated value.
      * @param AddressFormat $addressFormat The address format.
      */
-    protected function addViolation($field, $message, $invalidValue, AddressFormat $addressFormat)
+    protected function addViolation($field, $message, $invalidValue, AddressFormat $addressFormat): void
     {
         $this->context->buildViolation($message)
             ->atPath($field)

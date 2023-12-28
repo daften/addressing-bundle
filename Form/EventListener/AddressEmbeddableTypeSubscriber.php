@@ -120,10 +120,9 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
 
         foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat(), $fieldOverrides) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
+                $element_options['required'] = false;
                 if (in_array($field, $requiredFields)) {
                     $element_options['required'] = true;
-                } elseif (isset($element_options['required'])) {
-                    unset($element_options['required']);
                 }
 
                 $form->add(
