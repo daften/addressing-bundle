@@ -103,64 +103,64 @@ class AddressEmbeddable extends Address
         $this->locale = $locale;
     }
 
-    public function setAdditionalName(string $additionalName): void
+    public function setAdditionalName(?string $additionalName): void
     {
-        $this->additionalName = $additionalName;
+        $this->additionalName = $additionalName ?? '';
     }
 
-    public function setGivenName(string $givenName): void
+    public function setGivenName(?string $givenName): void
     {
-        $this->givenName = $givenName;
+        $this->givenName = $givenName ?? '';
     }
 
-    public function setFamilyName(string $familyName): void
+    public function setFamilyName(?string $familyName): void
     {
-        $this->familyName = $familyName;
+        $this->familyName = $familyName ?? '';
     }
 
-    public function setOrganization(string $organization): void
+    public function setOrganization(?string $organization): void
     {
-        $this->organization = $organization;
+        $this->organization = $organization ?? '';
     }
 
-    public function setAddressLine1(string $addressLine1): void
+    public function setAddressLine1(?string $addressLine1): void
     {
-        $this->addressLine1 = $addressLine1;
+        $this->addressLine1 = $addressLine1 ?? '';
     }
 
-    public function setAddressLine2(string $addressLine2): void
+    public function setAddressLine2(?string $addressLine2): void
     {
-        $this->addressLine2 = $addressLine2;
+        $this->addressLine2 = $addressLine2 ?? '';
     }
 
-    public function setAddressLine3(string $addressLine3): void
+    public function setAddressLine3(?string $addressLine3): void
     {
-        $this->addressLine3 = $addressLine3;
+        $this->addressLine3 = $addressLine3 ?? '';
     }
 
-    public function setPostalCode(string $postalCode): void
+    public function setPostalCode(?string $postalCode): void
     {
-        $this->postalCode = $postalCode;
+        $this->postalCode = $postalCode ?? '';
     }
 
-    public function setSortingCode(string $sortingCode): void
+    public function setSortingCode(?string $sortingCode): void
     {
-        $this->sortingCode = $sortingCode;
+        $this->sortingCode = $sortingCode ?? '';
     }
 
-    public function setLocality(string $locality): void
+    public function setLocality(?string $locality): void
     {
-        $this->locality = $locality;
+        $this->locality = $locality ?? '';
     }
 
-    public function setDependentLocality(string $dependentLocality): void
+    public function setDependentLocality(?string $dependentLocality): void
     {
-        $this->dependentLocality = $dependentLocality;
+        $this->dependentLocality = $dependentLocality ?? '';
     }
 
-    public function setAdministrativeArea(string $administrativeArea): void
+    public function setAdministrativeArea(?string $administrativeArea): void
     {
-        $this->administrativeArea = $administrativeArea;
+        $this->administrativeArea = $administrativeArea ?? '';
     }
 
     public function setCountryCode(string $countryCode): void
